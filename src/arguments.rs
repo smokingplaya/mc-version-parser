@@ -30,7 +30,6 @@ pub trait Substitution {
   fn append_arguments(&mut self, args: &  ArgumentList) -> Vec<String>;
 }
 
-// todo
 impl Substitution for CollectedArguments {
   fn values(&mut self, values: Values) -> Vec<String> {
     let re = Regex::new(r"\$\{([^\}]+)\}").expect("Invalid regex");
@@ -46,7 +45,6 @@ impl Substitution for CollectedArguments {
       .collect()
   }
 
-  // todo
   fn append_arguments(&mut self, args: &ArgumentList) -> Vec<String> {
     let mut result = self.clone();
 

@@ -7,7 +7,9 @@ pub struct Library {
   pub url: Option<String>,
   pub downloads: Option<Downloads>,
   pub natives: Option<Natives>,
-  pub rules: Option<Rules>
+  pub rules: Option<Rules>,
+  #[serde(rename="downloadOnly")]
+  pub download_only: Option<bool>
 }
 
 pub(crate) type Libraries = Vec<Library>;
@@ -22,6 +24,7 @@ impl LibrariesCollect for Libraries {
 
     self.into_iter()
       .filter(|lib| lib.rules.as_ref().map_or(true, |rule| rule.is_followed()))
+      .filter(|lib| !lib.download_only.unwrap_or_default())
       .for_each(|lib| { (!result.contains(&lib.name)).then(|| {result.push(lib.name.clone())}); });
 
     result
